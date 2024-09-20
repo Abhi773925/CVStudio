@@ -1,0 +1,54 @@
+@keyframes colorChange {
+    0% { color: #ff6347; }   
+    25% { color: #32cd32; }  
+    50% { color: #1e90ff; }  
+    75% { color: #ff69b4; }  
+    100% { color: #ff6347; } 
+  }
+  
+ .lighting {
+    animation: colorChange 10s infinite; 
+  }
+  
+
+
+
+
+  .glow {
+    width: 100%; /* Adjust the width as needed */
+    max-width: 600px; /* Optional: limits the maximum width of the image */
+    height: auto; /* Maintains aspect ratio */
+    animation: rotate 10s infinite linear; /* Rotates the image continuously */
+    filter:  drop-shadow(0 0 6px rgba(6, 182, 225, 0.8));
+  }
+  
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      /* transform: rotate(20deg); */
+      transform: rotateY(360deg);
+    }
+  }
+  
+
+
+
+  .button-glow {
+    box-shadow: 
+    0 0 10px rgba(255, 0, 0, 0.7),   /* Red glow */
+    0 0 10px rgba(0, 74, 234, 0.5),   /* Blue glow */
+    0 0 10px rgba(0, 0, 0, 0.5);      /* Black glow */
+      transition: box-shadow 0.3s ease-in-out;
+  }
+  
+  .button-glow:hover {
+    box-shadow: 0 0 10px rgba(17, 24, 39, 1), 0 0 10px rgba(17, 24, 39, 0.8);
+  }
+  
+  /* Button styles */
+  .button-glow {
+    border: 2px solid rgb(223, 97, 19); /* Change to your desired RGB value */
+  }
+  

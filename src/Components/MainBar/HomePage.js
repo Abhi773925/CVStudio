@@ -31,7 +31,7 @@ const HomePage = () => {
             </Link>
           </div>
           <div className="pt-10 lg:mt-0 lg:col-span-5 lg:flex">
-            <img className="glow" src={heroimg} alt="hero image" loading='lazy' />
+            <img className="glow" src="https://enhancv.com/_next/static/images/resume4-eb8e2bacc73eb143b714ffec42b44926.webp" alt="hero image" loading='lazy' />
           </div>
         </div>
       </section>

@@ -11,7 +11,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import {BackNextBtnComponent,InputComponent} from "../../Pages/index";
+import { BackNextBtnComponent, InputComponent } from "../../Pages/index";
 import { addPersonalInfo } from "../../Redux/Actions/actions";
 
 const mapStateToProps = (state) => ({
@@ -33,13 +33,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const PersonalInfoComponent = (props) => {
   const [loading, setLoading] = useState(false);
-
-  //Block the popup notification when no profile image selected
   const [imgSnackbar, setImgSnackbar] = useState(false);
-  // eslint-disable-next-line
   const [vertical, setVertical] = useState("bottom");
-  // eslint-disable-next-line
-  const [horizontal, setHorizontal] = useState("centre");
+  const [horizontal, setHorizontal] = useState("center");
 
   const {
     register,
@@ -50,9 +46,7 @@ const PersonalInfoComponent = (props) => {
   const [img, setImg] = useState(
     props.personalInfo.profileImg.length ? props.personalInfo.profileImg : ""
   );
-  // eslint-disable-next-line
-  const [sotreImage, setSotreImage] = useState([]);
-
+  const [storeImage, setStoreImage] = useState([]);
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -63,7 +57,6 @@ const PersonalInfoComponent = (props) => {
   };
 
   const handleNext = (data) => {
-    // console.log(img.length);
     if (img.length) {
       setLoading(true);
       props.onAddPersonalInfo({ profileImg: img, ...data });
@@ -92,7 +85,8 @@ const PersonalInfoComponent = (props) => {
               right: 8,
               top: 8,
               color: (theme) => theme.palette.grey[500],
-            }}>
+            }}
+          >
             <CloseIcon />
           </IconButton>
         ) : null}
@@ -102,83 +96,92 @@ const PersonalInfoComponent = (props) => {
 
   const onCrop = (view) => {
     setImg(view);
+    console.log("Cropped Image: ", view); // Added log to debug mobile uploads
   };
 
-  const onClose = (view) => {
+  const onCloseImageEditor = () => {
     setImg(null);
+    console.log("Image editor closed.");
   };
 
   const saveImage = () => {
-    setSotreImage([{ img }]);
-    // props.onSetProfileImage(img);
+    setStoreImage([{ img }]);
     setOpen(false);
   };
 
-
-
   const handleCloseSnackbar = (event, reason) => {
-    console.log(event,reason)
     if (reason === "clickaway") {
       return;
     }
-
     setImgSnackbar(false);
   };
 
-  // getting windows width
+  // Window resizing for responsive behavior
   const getWindowSize = () => {
     const { innerWidth, innerHeight } = window;
-    console.log(innerHeight, innerWidth)
     return { innerWidth, innerHeight };
   };
 
   const [windowSize, setWindowSize] = useState(getWindowSize());
   useEffect(() => {
-    function handleWindowResize() {
+    const handleWindowResize = () => {
       setWindowSize(getWindowSize());
-    }
-
+    };
     window.addEventListener("resize", handleWindowResize);
-
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
-
-  // const profileImg = sotreImage.map((ele) => ele.img);
-  console.log(props.personalInfo, errors);
 
   return (
     <Paper className="personal-info-paper w-full dark:bg-primary dark:text-secondary mt-[50px]" elevation={3}>
       <Avatar
         sx={{ width: 120, height: 120, marginBottom: 1 }}
         alt="profile img"
-        src={
-          img.length ? img : `https://img.icons8.com/color/344/test-account.png`
-        }
+        src={img.length ? img : `https://img.icons8.com/color/344/test-account.png`}
       />
       <div>
         <Button
           className="change-profile-photo-btn"
           variant="outlined"
-          onClick={handleClickOpen}>
+          onClick={handleClickOpen}
+        >
           Change Profile Photo
         </Button>
         <BootstrapDialog
           onClose={handleClose}
           aria-labelledby="customized-dialog-title"
-          open={open}>
+          open={open}
+        >
           <BootstrapDialogTitle
             id="customized-dialog-title"
-            onClose={handleClose}>
+            onClose={handleClose}
+          >
             Update Image
           </BootstrapDialogTitle>
           <DialogContent>
+            {/* React Avatar Editor */}
             <Avatar1
               width={windowSize.innerWidth > 900 ? 200 : 150}
               height={windowSize.innerHeight > 500 ? 200 : 50}
               onCrop={onCrop}
-              onClose={onClose}
+              onClose={onCloseImageEditor}
+            />
+            {/* Fallback File Input for mobile debugging */}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onloadend = () => {
+                    setImg(reader.result);
+                    console.log("File input image selected: ", reader.result); // Added log to track file input image
+                  };
+                  reader.readAsDataURL(file);
+                }
+              }}
             />
           </DialogContent>
           <DialogActions>
@@ -190,6 +193,7 @@ const PersonalInfoComponent = (props) => {
       </div>
       <form onSubmit={handleSubmit(handleNext)}>
         <div className="personal-info-form-fields">
+          {/* Input Fields */}
           <InputComponent
             title={"First Name"}
             type={"text"}
@@ -255,6 +259,7 @@ const PersonalInfoComponent = (props) => {
             errorMessage={errors.mobile ? errors.mobile.message : null}
           />
         </div>
+        {/* Address, City, Country, Postal Code */}
         <InputComponent
           title={"Address"}
           type={"text"}
@@ -306,7 +311,7 @@ const PersonalInfoComponent = (props) => {
           />
           <InputComponent
             title={"Postal Code"}
-            type={"number"}
+            type={"text"}
             name={"postalCode"}
             register={register}
             multiline={false}
@@ -321,41 +326,21 @@ const PersonalInfoComponent = (props) => {
             errorMessage={errors.postalCode ? errors.postalCode.message : null}
           />
         </div>
-        <InputComponent
-          title={"Objective"}
-          type={"text"}
-          name={"objective"}
-          register={register}
-          multiline={false}
-          value={props.personalInfo.objective}
-          setValue={(value) =>
-            props.onAddPersonalInfo({
-              ...props.personalInfo,
-              objective: value,
-            })
-          }
-          error={errors.objective ? true : false}
-          errorMessage={errors.objective ? errors.objective.message : null}
-        />
-        <Divider className="personal-details-divider" />
-        <BackNextBtnComponent
-          // onNext={() => handleSubmit(handleNext)}
-          loading={loading}
-          tab={props.tab}
-          nextTitle={"Next"}
-          backTitle={"Back"}
-        />
+        <Divider className="divider" />
+        <div className="buttons">
+          <BackNextBtnComponent
+            setTab={props.setTab}
+            tab={props.tab}
+            isLoading={loading}
+          />
+        </div>
       </form>
-
-      {/*popup notification when no profile image selected */}
-      {/* ref :https://mui.com/material-ui/react-snackbar/ */}
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}
-        key={vertical + horizontal}
         open={imgSnackbar}
-        autoHideDuration={1500}
         onClose={handleCloseSnackbar}
-        message="Please select a profile image"
+        message="Please upload a profile picture"
+        key={vertical + horizontal}
       />
     </Paper>
   );

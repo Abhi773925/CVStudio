@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom'; 
 import './HomePage.css';
 import Navbar from "./Navbar";
-import heroimg from "../../Utils/Images/ladki.svg";
 import Footer from"./Footer";
 const HomePage = () => {
   return (

@@ -20,8 +20,6 @@ import {
 } from "../Redux/Actions/actions";
 import Footer from "../Components/MainBar/Footer";
 
-//in this page we are storing the details in the local storage in JSON format (key,value) so that after creating Resume we can retrieve them.
-
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -33,9 +31,6 @@ const Item = styled(Paper)(({ theme }) => ({
 const mapStateToProps = (state) => ({
   selectedTemplateId: state.selectedTemplateReducer.selectedTemplateId,
 });
-
-//mapStateToProps is used for selecting the part of the data from the store that the connected component needs
-// mapDispatchToProps allows you to specify which actions your component might need to dispatch
 
 const mapDispatchToProps = (dispatch) => ({
   setSelectedTemplateId: (id) => dispatch(selectTemplate(id)),
@@ -63,8 +58,6 @@ const MyResumes = (props) => {
     let template = templates.find(
       (eachTemplate) => eachTemplate.id === resume.template_id
     );
-    // console.log("resume",resume)
-    // console.log("template", template);
 
     const TemplateComp = React.cloneElement(template.template, {
       personalinfo: resume.personalInfo,
@@ -78,7 +71,6 @@ const MyResumes = (props) => {
     return TemplateComp;
   };
 
-  //delete resume
   const deleteResume = (resume) => {
     let resumes = window.localStorage.getItem("resumes");
 
@@ -92,30 +84,16 @@ const MyResumes = (props) => {
   };
 
   const downloadResume = (id) => {
-    // console.log(id);
     const report = new JsPDF("portrait", "pt", "a4");
     report.html(document.getElementById(`${id}report`)).then(() => {
       report.save(`resume.pdf`);
-      // console.log(resumes)
     });
   };
 
   const setUserData = (resume) => {
-    // console.log(resume);
-    //set personal info
-
     props.onAddPersonalInfo(resume.personalInfo);
-
-    //set work experience
-
     props.setAllExperience(resume.experiences);
-
-    //set education info
-
     props.onAddEducation(resume.educationInfo);
-
-    //set skills
-
     props.onEditSkill(resume.skills);
   };
 
@@ -126,37 +104,23 @@ const MyResumes = (props) => {
     navigate("/template/fill-details");
   };
 
-  // console.log(resumes);
   return (
-    <>
+    <div className="flex flex-col h-screen">
       <Navbar active={"My Resumes"} />
-      <div className="my-resumes w-screen h-screen dark:bg-primary dark:text-secondary">
+      <div className="my-resumes flex-grow w-full h-full dark:bg-primary dark:text-secondary">
         <Box sx={{ flexGrow: 1 }}>
-          <Grid
-            container
-            justifyContent="center"
-            alignItems="center"
-            className="grid"
-          >
+          <Grid container justifyContent="center" alignItems="center" className="grid">
             {resumes.length >= 1 ? (
               resumes.map((resume, index) => {
                 return (
-                  <Grid
-                    item
-                    className={`resume `}
-                    id={`${index}resume`}
-                    margin={2}
-                    key={index}
-                  >
+                  <Grid item className={`resume`} id={`${index}resume`} margin={2} key={index}>
                     <Item id={`${index}ITEM`}>
                       {getTemplate(resume, index)}
                       <BlackScreen />
                       <div className="use-template-btn-cont">
                         <Button
                           className="use-template-btn"
-                          onClick={() => {
-                            downloadResume(index);
-                          }}
+                          onClick={() => downloadResume(index)}
                           size="medium"
                           variant="contained"
                         >
@@ -164,9 +128,7 @@ const MyResumes = (props) => {
                         </Button>
                         <Button
                           className="use-template-btn"
-                          onClick={() => {
-                            deleteResume(resume);
-                          }}
+                          onClick={() => deleteResume(resume)}
                           size="medium"
                           variant="contained"
                         >
@@ -195,9 +157,9 @@ const MyResumes = (props) => {
             )}
           </Grid>
         </Box>
-        <Footer/>
       </div>
-    </>
+      <Footer className="mt-auto" />
+    </div>
   );
 };
 

@@ -130,7 +130,7 @@ const MyResumes = (props) => {
   return (
     <>
       <Navbar active={"My Resumes"} />
-      <div className="my-resumes w-full h-screen dark:bg-primary dark:text-secondary">
+      <div className="my-resumes w-screen h-screen dark:bg-primary dark:text-secondary">
         <Box sx={{ flexGrow: 1 }}>
           <Grid
             container

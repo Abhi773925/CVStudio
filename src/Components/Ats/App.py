@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import Flask, request, jsonify
+from flask import request, jsonify
 import google.generativeai as genai
 import PyPDF2 as pdf
 import os

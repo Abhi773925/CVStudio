@@ -1,4 +1,4 @@
-flask
-flask-cors
-google-generativeai
-PyPDF2
+Flask==2.0.3  # or the version you are using
+flask-cors==3.0.10  # if you're using CORS
+google-generativeai  # if you're using the Gemini API
+PyPDF2==1.26.0  # or the version you are using

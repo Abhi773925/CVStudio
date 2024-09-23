@@ -11,9 +11,13 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
+    "cors": "^2.8.5",
     "eslint": "^8.57.1",
+    "express": "^4.21.0",
     "flowbite": "^2.5.1",
     "jspdf": "^2.5.1",
+    "multer": "^1.4.5-lts.1",
+    "pdf-parse": "^1.1.1",
     "python-shell": "^5.0.0",
     "react": "^18.2.0",
     "react-avatar-edit": "^1.2.0",
@@ -27,12 +31,12 @@
     "uniqid": "^5.4.0",
     "web-vitals": "^2.1.4"
   },
-"scripts": {
-  "start": "react-scripts start",
-  "build": "react-scripts build && python3 ./Components/Ats/ats_backend.py",
-  "test": "react-scripts test",
-  "eject": "react-scripts eject"
-},
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build && python3 ./Components/Ats/ats_backend.py",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",

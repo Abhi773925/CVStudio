@@ -39,10 +39,12 @@ function SmartATS(props) {
 
     try {
       // Send the form data to your Flask backend running on localhost:5000
-      const result = await axios.post("http://localhost:5000/analyze-resume", formData, {
+      // const result = await axios.post("http://localhost:5000/analyze-resume", formData, {
+      //   headers: { "Content-Type": "multipart/form-data" },
+      // });
+      const result = await axios.post("https://cvstudio-kdzf.onrender.com/analyze-resume", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-
       // Handle the API response
       setResponse(result.data); // Assuming API returns { JDMatch, MissingKeywords, ProfileSummary }
     } catch (error) {

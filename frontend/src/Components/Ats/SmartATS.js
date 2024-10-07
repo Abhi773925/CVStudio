@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Footer from "../MainBar/Footer";
+import Footer from  "../MainBar/Footer";
 import axios from "axios";
 import {
   Button,

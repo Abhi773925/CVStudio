@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "flowbite";
 import { initFlowbite } from 'flowbite';
 import { Link } from "react-router-dom";
-import SmartATS from '../Ats/SmartATS';
+import SmartATS from "../Ats/SmartATS";
 const Navbar = () => {
   const [darkMode, setDarkMode] = useState(true);
 
